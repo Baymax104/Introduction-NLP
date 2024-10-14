@@ -1,8 +1,9 @@
-
-from  pyhanlp import *
-import zipfile
 import os
+import zipfile
+
+from pyhanlp import *
 from pyhanlp.static import download, remove_file, HANLP_DATA_PATH
+
 
 def test_data_path():
     """
@@ -15,14 +16,13 @@ def test_data_path():
     return data_path
 
 
-
 ## 验证是否存在 MSR语料库，如果没有自动下载
 def ensure_data(data_name, data_url):
     root_path = test_data_path()
     dest_path = os.path.join(root_path, data_name)
     if os.path.exists(dest_path):
         return dest_path
-    
+
     if data_url.endswith('.zip'):
         dest_path += '.zip'
     download(data_url, dest_path)
@@ -42,7 +42,6 @@ PKU199801_TEST = os.path.join(PKU98, '199801-test.txt')
 POS_MODEL = os.path.join(PKU98, 'pos.bin')
 NER_MODEL = os.path.join(PKU98, 'ner.bin')
 
-
 ## ===============================================
 ## 以下开始 感知机 命名实体识别
 
@@ -53,7 +52,6 @@ PerceptronPOSTagger = JClass('com.hankcs.hanlp.model.perceptron.PerceptronPOSTag
 Sentence = JClass('com.hankcs.hanlp.corpus.document.sentence.Sentence')
 AbstractLexicalAnalyzer = JClass('com.hankcs.hanlp.tokenizer.lexical.AbstractLexicalAnalyzer')
 Utility = JClass('com.hankcs.hanlp.model.perceptron.utility.Utility')
-
 
 
 def train(corpus, model):
@@ -72,7 +70,7 @@ def test(recognizer):
 if __name__ == '__main__':
     recognizer = train(PKU199801_TRAIN, NER_MODEL)
     test(recognizer)
-    
+
     ## 支持在线学习
     # 创建了感知机词法分析器
     analyzer = PerceptronLexicalAnalyzer(PerceptronSegmenter(), PerceptronPOSTagger(), recognizer)  # ①
@@ -81,6 +79,3 @@ if __name__ == '__main__':
     # 测试词法分析器对样本的分析结果是否与标注一致，若不一致重复在线学习，直到两者一致。
     while not analyzer.analyze(sentence.text()).equals(sentence):  # ③
         analyzer.learn(sentence)
-
-
-

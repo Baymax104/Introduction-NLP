@@ -1,5 +1,5 @@
-import zipfile
 import os
+import zipfile
 
 from pyhanlp import *
 from pyhanlp.static import download, remove_file, HANLP_DATA_PATH
@@ -15,13 +15,14 @@ def test_data_path():
         os.mkdir(data_path)
     return data_path
 
+
 ## 验证是否存在 MSR语料库，如果没有自动下载
 def ensure_data(data_name, data_url):
     root_path = test_data_path()
     dest_path = os.path.join(root_path, data_name)
     if os.path.exists(dest_path):
         return dest_path
-    
+
     if data_url.endswith('.zip'):
         dest_path += '.zip'
     download(data_url, dest_path)
@@ -57,7 +58,7 @@ def evaluate(segment):
 
 if __name__ == '__main__':
     segment = train(msr_train, FirstOrderHiddenMarkovModel())
-    HanLP.Config.ShowTermNature = False   # 关闭现实词性
-    
+    HanLP.Config.ShowTermNature = False  # 关闭现实词性
+
     print(segment.seg('商品和服务'))
     print(segment.seg('商品和货币'))

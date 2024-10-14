@@ -1,5 +1,5 @@
-from pyhanlp import *
 from jpype import JString
+from pyhanlp import *
 
 ## 加载 JAVA 类
 CorpusLoader = SafeJClass('com.hankcs.hanlp.corpus.document.CorpusLoader')
@@ -61,27 +61,24 @@ def train_bigram(corpus_path, model_path):
     for sent in sents:
         for word in sent:
             word.setLabel("n")
-    
+
     maker = NatureDictionaryMaker()
     maker.compute(sents)
-    maker.saveTxtTo(model_path)      # 会生成两个统计词频文件
+    maker.saveTxtTo(model_path)  # 会生成两个统计词频文件
+
 
 ## 加载 n元语法模型
 def load_bigram(model_path, sent):
     HanLP.Config.CoreDictionaryPath = model_path + ".txt"  # unigram
     HanLP.Config.BiGramDictionaryPath = model_path + ".ngram.txt"  # bigram
-    
+
     wordnet = generate_wordnet(sent, CoreDictionary.trie)
     print(viterbi(wordnet))
 
 
-
-corpus_path = 'my_cws_corpus.txt' # 语料库文件
-model_path = 'my_cws_model'       # 模型保存路径
-sent = '货币和服务'                 # 需要分词的语句
+corpus_path = 'my_cws_corpus.txt'  # 语料库文件
+model_path = 'my_cws_model'  # 模型保存路径
+sent = '货币和服务'  # 需要分词的语句
 
 train_bigram(corpus_path, model_path)
 load_bigram(model_path, sent)
-
-
-

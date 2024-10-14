@@ -1,9 +1,8 @@
-from pyhanlp.static import STATIC_ROOT, download
-
-
-import zipfile
 import os
-from pyhanlp.static import download, remove_file, HANLP_DATA_PATH
+import zipfile
+
+from pyhanlp.static import STATIC_ROOT, download, remove_file, HANLP_DATA_PATH
+
 
 def test_data_path():
     """
@@ -16,14 +15,13 @@ def test_data_path():
     return data_path
 
 
-
 ## 验证是否存在 MSR语料库，如果没有自动下载
 def ensure_data(data_name, data_url):
     root_path = test_data_path()
     dest_path = os.path.join(root_path, data_name)
     if os.path.exists(dest_path):
         return dest_path
-    
+
     if data_url.endswith('.zip'):
         dest_path += '.zip'
     download(data_url, dest_path)
@@ -35,12 +33,12 @@ def ensure_data(data_name, data_url):
     return dest_path
 
 
-sogou_corpus_path = ensure_data('搜狗文本分类语料库迷你版', 'http://file.hankcs.com/corpus/sogou-text-classification-corpus-mini.zip')
+sogou_corpus_path = ensure_data('搜狗文本分类语料库迷你版',
+                                'http://file.hankcs.com/corpus/sogou-text-classification-corpus-mini.zip')
 
 
 ## ===============================================
 ## 以下开始 支持向量机SVM
-
 
 
 def install_jar(name, url):

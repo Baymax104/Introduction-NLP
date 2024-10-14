@@ -1,29 +1,28 @@
-
-
-## 节点类 
-class Node():
+# 节点类
+class Node:
     def __init__(self) -> None:
         self.children = {}
         self.value = None
-    
+
     # 增加节点
     def add_child(self, char, value, overwrite=False):
         child = self.children.get(char)
         if child is None:
-            child = Node()                # 创建子节点
-            self.children[char] = child   # 子节点赋值，字 -> 节点的映射
-        
+            child = Node()  # 创建子节点
+            self.children[char] = child  # 子节点赋值，字 -> 节点的映射
+
         if value is not None or overwrite:
-            child.value = value           # 节点上对应的词
-        
+            child.value = value  # 节点上对应的词
+
         return child
-    
-## 字典树  继承节点类   
+
+
+# 字典树  继承节点类
 class Trie(Node):
 
     def __contains__(self, key):
         return self[key] is not None
-    
+
     # 查询方法
     def __getitem__(self, key):
         state = self
@@ -31,9 +30,9 @@ class Trie(Node):
             state = state.children.get(char)
             if state is None:
                 return None
-        
+
         return state.value
-    
+
     # 重载方法，使得类可以像对待dict那样操作字典树
     # 构建一个词的字典树
     def __setitem__(self, key, value):

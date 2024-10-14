@@ -1,11 +1,9 @@
+import os
+import zipfile
 
 from pyhanlp import *
-
-
-
-import zipfile
-import os
 from pyhanlp.static import download, remove_file, HANLP_DATA_PATH
+
 
 def test_data_path():
     """
@@ -18,14 +16,13 @@ def test_data_path():
     return data_path
 
 
-
 ## 验证是否存在 MSR语料库，如果没有自动下载
 def ensure_data(data_name, data_url):
     root_path = test_data_path()
     dest_path = os.path.join(root_path, data_name)
     if os.path.exists(dest_path):
         return dest_path
-    
+
     if data_url.endswith('.zip'):
         dest_path += '.zip'
     download(data_url, dest_path)
@@ -35,8 +32,6 @@ def ensure_data(data_name, data_url):
         remove_file(dest_path)
         dest_path = dest_path[:-len('.zip')]
     return dest_path
-
-
 
 
 HLM_PATH = ensure_data("红楼梦.txt", "http://file.hankcs.com/corpus/红楼梦.zip")
@@ -59,7 +54,7 @@ def test_weibo():
 
 def extract(corpus):
     print("%s 热词" % corpus)
-    
+
     ## 参数如下
     # reader: 文本数据源
     # size: 控制返回多少个词
@@ -85,4 +80,3 @@ if __name__ == '__main__':
     # 更多参数
     word_info_list = HanLP.extractWords(IOUtil.newBufferedReader(HLM_PATH), 100, True, 4, 0.0, .5, 100)
     print(word_info_list)
-

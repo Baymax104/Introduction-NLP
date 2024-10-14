@@ -1,8 +1,9 @@
-from pyhanlp import *
-
-import zipfile
 import os
+import zipfile
+
+from pyhanlp import *
 from pyhanlp.static import download, remove_file, HANLP_DATA_PATH
+
 
 def test_data_path():
     """
@@ -15,14 +16,13 @@ def test_data_path():
     return data_path
 
 
-
 ## 验证是否存在语料库，如果没有自动下载
 def ensure_data(data_name, data_url):
     root_path = test_data_path()
     dest_path = os.path.join(root_path, data_name)
     if os.path.exists(dest_path):
         return dest_path
-    
+
     if data_url.endswith('.zip'):
         dest_path += '.zip'
     download(data_url, dest_path)
@@ -37,14 +37,12 @@ def ensure_data(data_name, data_url):
 # 中文情感挖掘语料-ChnSentiCorp 谭松波
 chn_senti_corp = ensure_data("ChnSentiCorp情感分析酒店评论", "http://file.hankcs.com/corpus/ChnSentiCorp.zip")
 
-
 ## ===============================================
 ## 以下开始 情感分析
 
 
 IClassifier = JClass('com.hankcs.hanlp.classification.classifiers.IClassifier')
 NaiveBayesClassifier = JClass('com.hankcs.hanlp.classification.classifiers.NaiveBayesClassifier')
-
 
 
 def predict(classifier, text):

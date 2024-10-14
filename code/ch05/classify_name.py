@@ -1,8 +1,8 @@
+import os
+import zipfile
+
 from pyhanlp import *
 from pyhanlp.static import download, remove_file, HANLP_DATA_PATH
-
-import zipfile
-import os
 
 
 def test_data_path():
@@ -15,13 +15,14 @@ def test_data_path():
         os.mkdir(data_path)
     return data_path
 
+
 ## 验证是否存在 cnname 人名性别语料库，如果没有自动下载
 def ensure_data(data_name, data_url):
     root_path = test_data_path()
     dest_path = os.path.join(root_path, data_name)
     if os.path.exists(dest_path):
         return dest_path
-    
+
     if data_url.endswith('.zip'):
         dest_path += '.zip'
     download(data_url, dest_path)
@@ -46,7 +47,7 @@ MODEL = cnname + ".bin"
 
 def run_classifier(averaged_perceptron):
     print('=====%s=====' % ('平均感知机算法' if averaged_perceptron else '朴素感知机算法'))
-    
+
     # 感知机模型
     classifier = PerceptronNameGenderClassifier()
     print('训练集准确率：', classifier.train(TRAINING_SET, 10, averaged_perceptron))

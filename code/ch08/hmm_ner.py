@@ -1,8 +1,9 @@
-
-from  pyhanlp import *
-import zipfile
 import os
+import zipfile
+
+from pyhanlp import *
 from pyhanlp.static import download, remove_file, HANLP_DATA_PATH
+
 
 def test_data_path():
     """
@@ -15,14 +16,13 @@ def test_data_path():
     return data_path
 
 
-
 ## 验证是否存在 MSR语料库，如果没有自动下载
 def ensure_data(data_name, data_url):
     root_path = test_data_path()
     dest_path = os.path.join(root_path, data_name)
     if os.path.exists(dest_path):
         return dest_path
-    
+
     if data_url.endswith('.zip'):
         dest_path += '.zip'
     download(data_url, dest_path)
@@ -42,7 +42,6 @@ PKU199801_TEST = os.path.join(PKU98, '199801-test.txt')
 POS_MODEL = os.path.join(PKU98, 'pos.bin')
 NER_MODEL = os.path.join(PKU98, 'ner.bin')
 
-
 ## ===============================================
 ## 以下开始 HMM 命名实体识别
 
@@ -51,7 +50,6 @@ AbstractLexicalAnalyzer = JClass('com.hankcs.hanlp.tokenizer.lexical.AbstractLex
 PerceptronSegmenter = JClass('com.hankcs.hanlp.model.perceptron.PerceptronSegmenter')
 PerceptronPOSTagger = JClass('com.hankcs.hanlp.model.perceptron.PerceptronPOSTagger')
 Utility = JClass('com.hankcs.hanlp.model.perceptron.utility.Utility')
-
 
 
 def train(corpus):
@@ -71,6 +69,3 @@ def test(recognizer):
 if __name__ == '__main__':
     recognizer = train(PKU199801_TRAIN)
     test(recognizer)
-
-
-
